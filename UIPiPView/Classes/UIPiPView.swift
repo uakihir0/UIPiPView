@@ -57,7 +57,6 @@ open class UIPiPView: UIView {
     private func startPictureInPictureSub(
         refreshInterval: TimeInterval?
     ) {
-
         if isUIPiPViewSupported(), #available(iOS 15.0, *) {
 
             if (pipController.contentSource !== nil) {
@@ -154,7 +153,7 @@ open class UIPiPView: UIView {
     /// This function basically does not need to be called by UIPiPView users,
     ///  but if you want to create your own modified CMSampleBuffer, prepare an overwritten function.
     open func makeNextVieoBuffer() -> CMSampleBuffer? {
-        return nil
+        return self.toUIImage().toCMSampleBuffer()
     }
 }
 

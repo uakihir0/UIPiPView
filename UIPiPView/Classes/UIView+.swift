@@ -19,11 +19,11 @@ extension UIView {
             superView.leadingAnchor.constraint(equalTo: leadingAnchor),
             superView.trailingAnchor.constraint(equalTo: trailingAnchor),
             superView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+            ])
     }
-    
+
     /// toUIImage
-    var uiImage: UIImage {
+    func toUIImage() -> UIImage {
         let imageRenderer = UIGraphicsImageRenderer.init(size: bounds.size)
         return imageRenderer.image { context in
             layer.render(in: context.cgContext)
