@@ -49,7 +49,7 @@ open class UIPiPView: UIView {
 
     private func initializeState() {
         let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(AVAudioSessionCategoryPlayback, mode: AVAudioSessionModeMoviePlayback)
+        try! session.setCategory(.playback, mode: .moviePlayback)
         try! session.setActive(true)
         setupVideoLayerView()
     }
@@ -102,7 +102,7 @@ open class UIPiPView: UIView {
         if (videoLayerView.superview == nil) {
 
             self.addSubview(videoLayerView)
-            self.sendSubview(toBack: videoLayerView)
+            self.sendSubviewToBack(videoLayerView)
             videoLayerView.addFillConstraints(with: self)
             videoLayerView.alpha = 0 /// Hidden
 
@@ -147,7 +147,7 @@ open class UIPiPView: UIView {
         refreshIntervalTimer = Timer(
             timeInterval: interval, repeats: true) {
             [weak self] _ in self?.render() }
-        RunLoop.main.add(refreshIntervalTimer, forMode: RunLoopMode.defaultRunLoopMode)
+        RunLoop.main.add(refreshIntervalTimer, forMode: .default)
     }
 
     /// Create and return a CMSampleBuffer.
@@ -162,7 +162,7 @@ open class UIPiPView: UIView {
 // MARK: AVPictureInPictureControllerDelegate
 extension UIPiPView: AVPictureInPictureControllerDelegate {
 
-    open func picture(
+    open func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,
         failedToStartPictureInPictureWithError error: Error
     ) {
@@ -192,8 +192,8 @@ extension UIPiPView: AVPictureInPictureSampleBufferPlaybackDelegate {
         _ pictureInPictureController: AVPictureInPictureController
     ) -> CMTimeRange {
         return CMTimeRange(
-            start: kCMTimeNegativeInfinity,
-            duration: kCMTimePositiveInfinity
+            start: .negativeInfinity,
+            duration: .positiveInfinity
         )
     }
 
@@ -217,4 +217,3 @@ extension UIPiPView: AVPictureInPictureSampleBufferPlaybackDelegate {
         completionHandler()
     }
 }
-
