@@ -1,0 +1,6 @@
+framework module Pods_UIPiPView_Example {
+  umbrella header "Pods-UIPiPView_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

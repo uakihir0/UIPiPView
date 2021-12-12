@@ -1,0 +1,6 @@
+framework module Pods_UIPiPView_Tests {
+  umbrella header "Pods-UIPiPView_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

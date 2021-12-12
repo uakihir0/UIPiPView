@@ -1,0 +1,16 @@
+PODS:
+  - UIPiPView (0.1.0)
+
+DEPENDENCIES:
+  - UIPiPView (from `../`)
+
+EXTERNAL SOURCES:
+  UIPiPView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  UIPiPView: 224702328c47da037ce2bd2ba46cac3becc00844
+
+PODFILE CHECKSUM: c96adff5555b669572e7a7dd4c9c417ed8d966bd
+
+COCOAPODS: 1.11.2

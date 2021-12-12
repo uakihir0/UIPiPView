@@ -1,0 +1,6 @@
+framework module UIPiPView {
+  umbrella header "UIPiPView-umbrella.h"
+
+  export *
+  module * { export * }
+}

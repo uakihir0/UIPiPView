@@ -1,0 +1,22 @@
+{
+  "name": "UIPiPView",
+  "version": "0.1.0",
+  "summary": "A short description of UIPiPView.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Akihiro Urushiara/UIPiPView",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Akihiro Urushiara": "a.urusihara@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Akihiro Urushiara/UIPiPView.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "UIPiPView/Classes/**/*"
+}
