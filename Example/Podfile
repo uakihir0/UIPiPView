@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'UIPiPView_Example' do
+  pod 'UIPiPView', :path => '../'
+
+  target 'UIPiPView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
