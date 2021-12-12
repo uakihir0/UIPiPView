@@ -13,6 +13,8 @@
 		502983B5AE82EEB922D110353EDEFB74 /* UIPiPView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD98DD3E8ABECD7497F856675FC0174 /* UIPiPView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5438607C2BC02FBF8113EB0F1F680EAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		71BBA016276609D10072FF5A /* UIPiPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BBA015276609D10072FF5A /* UIPiPView.swift */; };
+		71BBA0182766A0E20072FF5A /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BBA0172766A0E10072FF5A /* UIView+.swift */; };
+		71BBA01A2766AA5F0072FF5A /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BBA0192766AA5F0072FF5A /* UIImage+.swift */; };
 		7D2EC38754677C50F28F0B9BF1CAAF57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		A762DDCC4B031F1E67F0ED4A34ED179F /* Pods-UIPiPView_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3577472D900446C4600B0C14C3D27BC2 /* Pods-UIPiPView_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB4284A55527860AB6EA05D36692FD7F /* Pods-UIPiPView_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD25B6D7A43CA908AE7576A7526B4FF /* Pods-UIPiPView_Tests-dummy.m */; };
@@ -51,6 +53,8 @@
 		685F8B09AB338D6BE78DD359E73055B7 /* UIPiPView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIPiPView-dummy.m"; sourceTree = "<group>"; };
 		6FD25B6D7A43CA908AE7576A7526B4FF /* Pods-UIPiPView_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UIPiPView_Tests-dummy.m"; sourceTree = "<group>"; };
 		71BBA015276609D10072FF5A /* UIPiPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPiPView.swift; sourceTree = "<group>"; };
+		71BBA0172766A0E10072FF5A /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		71BBA0192766AA5F0072FF5A /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		76D886E32A8BA32698C66499B3CA9C2D /* Pods-UIPiPView_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-UIPiPView_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7F17D66C8E925E099447AEBE12BF35E0 /* Pods_UIPiPView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIPiPView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				71BBA015276609D10072FF5A /* UIPiPView.swift */,
+				71BBA0192766AA5F0072FF5A /* UIImage+.swift */,
+				71BBA0172766A0E10072FF5A /* UIView+.swift */,
 				7BE32F2988C901CD3288437B8E15A339 /* Pod */,
 				A2FF6ABACFF24DD9A93D3858347AF66A /* Support Files */,
 			);
@@ -385,6 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71BBA0182766A0E20072FF5A /* UIView+.swift in Sources */,
+				71BBA01A2766AA5F0072FF5A /* UIImage+.swift in Sources */,
 				358C0C76F4A64DEC229A12E594485F05 /* UIPiPView-dummy.m in Sources */,
 				71BBA016276609D10072FF5A /* UIPiPView.swift in Sources */,
 			);
