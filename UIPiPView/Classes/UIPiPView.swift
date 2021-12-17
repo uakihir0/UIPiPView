@@ -34,8 +34,8 @@ open class UIPiPView: UIView {
     }
 
     /// Starts PinP.
-    /// Also, this function should be called due to a user operation.
-    /// (This is a violation of iOS app conventions).
+    /// Also, this function should be called due to a user operation. (This is a limitation of iOS app.)
+    /// Every withRefreshInterval (in seconds), the screen will refresh the PiP video image.
     open func startPictureInPicture(
         withRefreshInterval: TimeInterval
     ) {
@@ -46,8 +46,8 @@ open class UIPiPView: UIView {
     }
 
     /// Starts PinP.
-    /// Also, this function should be called due to a user operation.
-    /// (This is a violation of iOS app conventions).
+    /// Also, this function should be called due to a user operation. (This is a limitation of iOS app.)
+    /// This function will not automatically update the video image. You should call the render() function.
     open func startPictureInPictureWithManualCallRender() {
         initialize()
         DispatchQueue.main.async { [weak self] in
@@ -70,9 +70,14 @@ open class UIPiPView: UIView {
 
             guard let pipController = pipController else { return }
             if (pipController.isPictureInPicturePossible) {
-                pipController.startPictureInPicture()
-                if let ti = refreshInterval {
-                    setRenderInterval(ti)
+
+                /// Start asynchronously after processing is complete
+                /// (will not work if run here synchronously)
+                DispatchQueue.main.async { [weak self] in
+                    pipController.startPictureInPicture()
+                    if let ti = refreshInterval {
+                        self?.setRenderInterval(ti)
+                    }
                 }
 
             } else {
