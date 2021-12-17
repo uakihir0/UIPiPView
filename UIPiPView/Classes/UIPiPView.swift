@@ -19,11 +19,19 @@ open class UIPiPView: UIView {
         return false
     }
 
-    public let pipController = AVPictureInPictureController()
     public let pipBufferDisplayLayer = AVSampleBufferDisplayLayer()
 
+    private var pipController: AVPictureInPictureController?
     private var pipPossibleObservation: NSKeyValueObservation?
+    private var frameSizeObservation: NSKeyValueObservation?
     private var refreshIntervalTimer: Timer!
+
+    private func initialize() {
+        let session = AVAudioSession.sharedInstance()
+        try! session.setCategory(.playback, mode: .moviePlayback)
+        try! session.setActive(true)
+        setupVideoLayerView()
+    }
 
     /// Starts PinP.
     /// Also, this function should be called due to a user operation.
@@ -31,7 +39,7 @@ open class UIPiPView: UIView {
     open func startPictureInPicture(
         withRefreshInterval: TimeInterval
     ) {
-        initializeState()
+        initialize()
         DispatchQueue.main.async { [weak self] in
             self?.startPictureInPictureSub(refreshInterval: withRefreshInterval)
         }
@@ -41,32 +49,26 @@ open class UIPiPView: UIView {
     /// Also, this function should be called due to a user operation.
     /// (This is a violation of iOS app conventions).
     open func startPictureInPictureWithManualCallRender() {
-        initializeState()
-        DispatchQueue.main.async {
-            self.startPictureInPictureSub(refreshInterval: nil)
+        initialize()
+        DispatchQueue.main.async { [weak self] in
+            self?.startPictureInPictureSub(refreshInterval: nil)
         }
-    }
-
-    private func initializeState() {
-        let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(.playback, mode: .moviePlayback)
-        try! session.setActive(true)
-        setupVideoLayerView()
     }
 
     private func startPictureInPictureSub(
         refreshInterval: TimeInterval?
     ) {
         if isUIPiPViewSupported(), #available(iOS 15.0, *) {
+            render() /// For initial display
 
-            if (pipController.contentSource !== nil) {
-                pipController.contentSource = .init(
-                    sampleBufferDisplayLayer:
-                        pipBufferDisplayLayer,
-                    playbackDelegate: self)
-                pipController.delegate = self
+            if (pipController == nil) {
+                pipController = .init(contentSource: .init(
+                    sampleBufferDisplayLayer: pipBufferDisplayLayer,
+                    playbackDelegate: self))
+                pipController?.delegate = self
             }
 
+            guard let pipController = pipController else { return }
             if (pipController.isPictureInPicturePossible) {
                 pipController.startPictureInPicture()
                 if let ti = refreshInterval {
@@ -81,7 +83,7 @@ open class UIPiPView: UIView {
                     guard let self = self else { return }
 
                     if (change.newValue ?? false) {
-                        self.pipController.startPictureInPicture()
+                        pipController.startPictureInPicture()
                         self.pipPossibleObservation = nil
                         if let ti = refreshInterval {
                             self.setRenderInterval(ti)
@@ -102,17 +104,25 @@ open class UIPiPView: UIView {
 
             self.addSubview(videoLayerView)
             self.sendSubviewToBack(videoLayerView)
-            videoLayerView.addFillConstraints(with: self)
-            videoLayerView.alpha = 0 /// Hidden
+            videoLayerView.frame = self.bounds
+            videoLayerView.alpha = 0
 
             pipBufferDisplayLayer.frame = videoLayerView.bounds
             pipBufferDisplayLayer.videoGravity = .resizeAspect
             videoLayerView.layer.addSublayer(pipBufferDisplayLayer)
+
+            /// If the frame size changes, follow it.
+            frameSizeObservation = self.observe(
+                \UIPiPView.frame, options: [.initial, .new]) { [weak self] _, _ in
+                guard let self = self else { return }
+                self.videoLayerView.frame = self.bounds
+            }
         }
     }
 
     /// Stop PiP.
     open func stopPictureInPicture() {
+        guard let pipController = pipController else { return }
         if pipController.isPictureInPictureActive {
             pipController.stopPictureInPicture()
         }
@@ -124,6 +134,7 @@ open class UIPiPView: UIView {
 
     /// Returns whether PiP is running or not.
     open func isPictureInPictureActive() -> Bool {
+        guard let pipController = pipController else { return false }
         return pipController.isPictureInPictureActive
     }
 
@@ -132,6 +143,7 @@ open class UIPiPView: UIView {
     /// Draws the current UIView state as a video.
     /// Note that the PiP image will not change unless this function is called.
     open func render() {
+        /// Occasionally occurs in the background
         if (pipBufferDisplayLayer.status == .failed) {
             pipBufferDisplayLayer.flush()
         }
@@ -139,8 +151,10 @@ open class UIPiPView: UIView {
         pipBufferDisplayLayer.enqueue(buffer)
     }
 
-    ///
-    private func setRenderInterval(
+    /// Call render periodically.
+    /// If you have been calling render manually and
+    /// want to change to using Timer to call render, use this function.
+    open func setRenderInterval(
         _ interval: TimeInterval
     ) {
         refreshIntervalTimer = Timer(
@@ -151,7 +165,7 @@ open class UIPiPView: UIView {
 
     /// Create and return a CMSampleBuffer.
     /// This function basically does not need to be called by UIPiPView users,
-    ///  but if you want to create your own modified CMSampleBuffer, prepare an overwritten function.
+    /// but if you want to create your own modified CMSampleBuffer, prepare an overwritten function.
     open func makeNextVieoBuffer() -> CMSampleBuffer? {
         return self.toUIImage().toCMSampleBuffer()
     }
