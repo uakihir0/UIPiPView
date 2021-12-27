@@ -8,11 +8,27 @@
 [![Platform](https://img.shields.io/cocoapods/p/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
 -->
 
+<style>
+.flex{
+    display: flex;
+}
+.ml {
+    margin-left: 30px;    
+}
+</style>
+<div class="flex">
+<div><img src="./Document/image.gif" width="300px"></div>
+<div class="ml">
 This library is a UIView that is capable of Picture-in-Picture (PiP) in iOS.
-
+<br/><br/>
 Using this library, information that is updated in real time (e.g. stock prices) can be displayed on the screen using PiP, even when the app is in the background. We look forward to seeing many ideas come to fruition using this library.
 
-## Operating Requirements
+</div>
+</div>
+
+---
+
+## Requirements
 
 You need to be running `iOS15` or higher. This library can be installed on `iOS12` or higher, but PiP cannot be executed without `iOS15` or higher.
 
