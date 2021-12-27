@@ -64,10 +64,8 @@ uiPipView.stopPictureInPicture()
 
 ## 作者
 
-Akihiro Urushihara
-
-Mail: [a.urusihara@gmail.com](a.urusihara@gmail.com)
-
+Akihiro Urushihara  
+Mail: [a.urusihara@gmail.com](a.urusihara@gmail.com)  
 Twitter: [@uakihir0](https://twitter.com/uakihir0)
 
 ## ライセンス
