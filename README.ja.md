@@ -1,8 +1,10 @@
 # UIPiPView
 
+<!--
 [![Version](https://img.shields.io/cocoapods/v/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
 [![License](https://img.shields.io/cocoapods/l/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
 [![Platform](https://img.shields.io/cocoapods/p/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
+-->
 
 このライブラリは iOS でピクチャーインピクチャー (PiP) することが可能な UIView です。
 
