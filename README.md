@@ -1,4 +1,4 @@
-[> 日本語](./README.ja.md)
+[>> 日本語](./README.ja.md)
 
 # UIPiPView
 
@@ -64,7 +64,7 @@ To exit PiP, execute the following code.
 uiPipView.stopPictureInPicture()
 ```
 
-## Author.
+## Author
 
 Akihiro Urushihara  
 Mail: [a.urusihara@gmail.com](a.urusihara@gmail.com)  
