@@ -6,7 +6,9 @@
 [![Platform](https://img.shields.io/cocoapods/p/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
 -->
 
-このライブラリは iOS でピクチャーインピクチャー (PiP) することが可能な UIView です。
+<img src="./Document/image.gif" width="200px">
+
+**このライブラリは iOS でピクチャーインピクチャー (PiP) することが可能な UIView です。**
 
 このライブラリを使用することで、リアルタイムに更新される情報 (例えば株価など) を、アプリがバックグラウンドであっても、PiP を使用して画面上に表示することが可能になります。このライブラリを使用して、様々なアイデアが実現されることを楽しみにしています。
 
