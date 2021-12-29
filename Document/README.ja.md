@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/UIPiPView.svg?style=flat)](https://cocoapods.org/pods/UIPiPView)
 -->
 
-<img src="./Document/image.gif" width="200px">
+<img src="./image.gif" width="200px">
 
 **このライブラリは iOS でピクチャーインピクチャー (PiP) することが可能な UIView です。**
 
