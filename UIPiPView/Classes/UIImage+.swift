@@ -10,7 +10,7 @@ import UIKit
 import AVKit
 import AVFoundation
 
-extension UIImage {
+public extension UIImage {
 
     /// toCMSampleBuffer
     /// Fix the performance problem once it is through the jpeg format.

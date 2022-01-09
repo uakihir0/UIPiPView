@@ -178,7 +178,7 @@ open class UIPiPView: UIView {
 
 
 // MARK: AVPictureInPictureControllerDelegate
-extension UIPiPView: AVPictureInPictureControllerDelegate {
+public extension UIPiPView: AVPictureInPictureControllerDelegate {
 
     open func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,
@@ -198,7 +198,7 @@ extension UIPiPView: AVPictureInPictureControllerDelegate {
 }
 
 // MARK: AVPictureInPictureSampleBufferPlaybackDelegate
-extension UIPiPView: AVPictureInPictureSampleBufferPlaybackDelegate {
+public extension UIPiPView: AVPictureInPictureSampleBufferPlaybackDelegate {
 
     open func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,

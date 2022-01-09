@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 
 
-extension UIView {
+public extension UIView {
 
     /// Make the UIView the same size
     func addFillConstraints(with superView: UIView) {

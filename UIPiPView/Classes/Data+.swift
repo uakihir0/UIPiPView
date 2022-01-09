@@ -10,7 +10,7 @@ import Foundation
 import AVKit
 import AVFoundation
 
-extension Data {
+public extension Data {
 
     func toCMBlockBuffer() throws -> CMBlockBuffer {
         
