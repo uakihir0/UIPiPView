@@ -9,7 +9,9 @@ import UIKit
 import AVKit
 import AVFoundation
 
-open class UIPiPView: UIView {
+open class UIPiPView: UIView,
+    AVPictureInPictureControllerDelegate,
+    AVPictureInPictureSampleBufferPlaybackDelegate {
 
     /// Returns whether or not UIPiPView is supported.
     /// It depends on the iOS version, also note that it cannot be used with the iOS simulator.
@@ -174,12 +176,8 @@ open class UIPiPView: UIView {
     open func makeNextVieoBuffer() -> CMSampleBuffer? {
         return self.toUIImage().toCMSampleBuffer()
     }
-}
 
-
-// MARK: AVPictureInPictureControllerDelegate
-public extension UIPiPView: AVPictureInPictureControllerDelegate {
-
+    // MARK: AVPictureInPictureControllerDelegate
     open func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,
         failedToStartPictureInPictureWithError error: Error
@@ -195,11 +193,8 @@ public extension UIPiPView: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController
     ) {
     }
-}
 
-// MARK: AVPictureInPictureSampleBufferPlaybackDelegate
-public extension UIPiPView: AVPictureInPictureSampleBufferPlaybackDelegate {
-
+    // MARK: AVPictureInPictureSampleBufferPlaybackDelegate
     open func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,
         setPlaying playing: Bool
