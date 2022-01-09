@@ -15,7 +15,7 @@ open class UIPiPView: UIView,
 
     /// Returns whether or not UIPiPView is supported.
     /// It depends on the iOS version, also note that it cannot be used with the iOS simulator.
-    public func isUIPiPViewSupported() -> Bool {
+    static public func isUIPiPViewSupported() -> Bool {
         if AVPictureInPictureController.isPictureInPictureSupported(), #available(iOS 15.0, *) {
             return true }
         return false
