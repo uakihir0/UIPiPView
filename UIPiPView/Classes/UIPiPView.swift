@@ -60,7 +60,7 @@ open class UIPiPView: UIView,
     private func startPictureInPictureSub(
         refreshInterval: TimeInterval?
     ) {
-        if isUIPiPViewSupported(), #available(iOS 15.0, *) {
+        if UIPiPView.isUIPiPViewSupported(), #available(iOS 15.0, *) {
             render() /// For initial display
 
             if (pipController == nil) {
