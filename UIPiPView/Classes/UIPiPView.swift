@@ -165,8 +165,10 @@ open class UIPiPView: UIView,
         _ interval: TimeInterval
     ) {
         refreshIntervalTimer = Timer(
-            timeInterval: interval, repeats: true) {
-            [weak self] _ in self?.render() }
+            timeInterval: interval, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.render()
+        }
         RunLoop.main.add(refreshIntervalTimer, forMode: .default)
     }
 
@@ -174,7 +176,7 @@ open class UIPiPView: UIView,
     /// This function basically does not need to be called by UIPiPView users,
     /// but if you want to create your own modified CMSampleBuffer, prepare an overwritten function.
     open func makeNextVieoBuffer() -> CMSampleBuffer? {
-        return self.toUIImage().toCMSampleBuffer()
+        return self.makeSampleBuffer()
     }
 
     // MARK: AVPictureInPictureControllerDelegate
@@ -189,9 +191,12 @@ open class UIPiPView: UIView,
     ) {
     }
 
+    /// Always call the parent when overriding this function.
     open func pictureInPictureControllerWillStopPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController
     ) {
+        refreshIntervalTimer?.invalidate()
+        refreshIntervalTimer = nil
     }
 
     // MARK: AVPictureInPictureSampleBufferPlaybackDelegate
