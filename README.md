@@ -20,7 +20,7 @@ You need to be running `iOS15` or higher. This library can be installed on `iOS1
 
 Also, as a note for development, PiP will only work on **ACTUAL DEVICES**. Please note that PiP does not work with simulators. Also, this library depends on `AVKit` and `AVFoundation`.
 
-If you want to include this library in your app, you need to enable `Audio, AirPlay and Picture in Picture` in `Backgroound Models`. For more information, see [Apple's page](https://developer.apple.com/documentation/avfoundation/media_playback_and_selection/creating_a_basic_video_player_ios_and_tvos/enabling_background_audio).
+If you want to include this library in your app, you need to enable `Audio, AirPlay and Picture in Picture` in `Background Modes`. For more information, see [Apple's page](https://developer.apple.com/documentation/avfoundation/media_playback_and_selection/creating_a_basic_video_player_ios_and_tvos/enabling_background_audio).
 
 ## Installation
 
