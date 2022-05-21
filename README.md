@@ -30,6 +30,8 @@ UIPiPView can be installed using [CocoaPods](https://cocoapods.org). You can ins
 pod 'UIPiPView', :git => 'https://github.com/uakihir0/UIPiPView/', :branch => 'main'
 ```
 
+or can be installed using [SwiftPM](https://www.swift.org/package-manager/).
+
 ## Example
 
 It is always a good idea to check if your environment is ready to use `UIPiPView` before you start. You can do this with the following code.
