@@ -23,16 +23,40 @@ open class UIPiPView: UIView,
 
     public let pipBufferDisplayLayer = AVSampleBufferDisplayLayer()
 
-    private var pipController: AVPictureInPictureController?
+    /// Created in lazy because there is a problem with screen grayout
+    /// when generating synchronously before PiP starts.
+    /// Possible bug in iOS 16.
+    private lazy var pipController: AVPictureInPictureController? = {
+        if UIPiPView.isUIPiPViewSupported(), #available(iOS 15.0, *) {
+            let controller = AVPictureInPictureController(contentSource: .init(
+                sampleBufferDisplayLayer: pipBufferDisplayLayer,
+                playbackDelegate: self))
+            controller.delegate = self
+            return controller
+        } else {
+            print("[UIPiPView] UIPiPView cannot be used on this device or OS.")
+            return nil
+        }
+    }()
+
     private var pipPossibleObservation: NSKeyValueObservation?
     private var frameSizeObservation: NSKeyValueObservation?
     private var refreshIntervalTimer: Timer!
 
-    private func initialize() {
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        initialize()
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initialize()
+    }
+
+    public func initialize() {
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(.playback, mode: .moviePlayback)
         try! session.setActive(true)
-        setupVideoLayerView()
     }
 
     /// Starts PinP.
@@ -41,7 +65,7 @@ open class UIPiPView: UIView,
     open func startPictureInPicture(
         withRefreshInterval: TimeInterval
     ) {
-        initialize()
+        setupVideoLayerView()
         DispatchQueue.main.async { [weak self] in
             self?.startPictureInPictureSub(refreshInterval: withRefreshInterval)
         }
@@ -51,7 +75,7 @@ open class UIPiPView: UIView,
     /// Also, this function should be called due to a user operation. (This is a limitation of iOS app.)
     /// This function will not automatically update the video image. You should call the render() function.
     open func startPictureInPictureWithManualCallRender() {
-        initialize()
+        setupVideoLayerView()
         DispatchQueue.main.async { [weak self] in
             self?.startPictureInPictureSub(refreshInterval: nil)
         }
@@ -62,13 +86,6 @@ open class UIPiPView: UIView,
     ) {
         if UIPiPView.isUIPiPViewSupported(), #available(iOS 15.0, *) {
             render() /// For initial display
-
-            if (pipController == nil) {
-                pipController = .init(contentSource: .init(
-                    sampleBufferDisplayLayer: pipBufferDisplayLayer,
-                    playbackDelegate: self))
-                pipController?.delegate = self
-            }
 
             guard let pipController = pipController else { return }
             if (pipController.isPictureInPicturePossible) {
