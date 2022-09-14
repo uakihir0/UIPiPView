@@ -54,9 +54,11 @@ open class UIPiPView: UIView,
     }
 
     public func initialize() {
-        let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(.playback, mode: .moviePlayback)
-        try! session.setActive(true)
+        if #available(iOS 10.0, *) {
+            let session = AVAudioSession.sharedInstance()
+            try! session.setCategory(.playback, mode: .moviePlayback)
+            try! session.setActive(true)
+        }
     }
 
     /// Starts PinP.
