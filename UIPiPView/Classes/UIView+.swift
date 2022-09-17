@@ -87,7 +87,7 @@ public extension UIView {
                     formatDescription: formatDescription!,
                     sampleTiming: timingInfo)
             } else {
-                assertionFailure("[UIPiPView] Not supported under iOS 13.")
+                assertionFailure("[UIPiPView] UIPiPView cannot be used on this device or OS.")
                 return nil
             }
         } catch {
