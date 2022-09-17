@@ -18,6 +18,7 @@ open class UIPiPView: UIView,
     static public func isUIPiPViewSupported() -> Bool {
         if AVPictureInPictureController.isPictureInPictureSupported(), #available(iOS 15.0, *) {
             return true }
+        print("[UIPiPView] UIPiPView cannot be used on this device or OS.")
         return false
     }
 
@@ -34,7 +35,6 @@ open class UIPiPView: UIView,
             controller.delegate = self
             return controller
         } else {
-            print("[UIPiPView] UIPiPView cannot be used on this device or OS.")
             return nil
         }
     }()
@@ -54,11 +54,12 @@ open class UIPiPView: UIView,
     }
 
     public func initialize() {
-        if #available(iOS 10.0, *) {
-            let session = AVAudioSession.sharedInstance()
-            try! session.setCategory(.playback, mode: .moviePlayback)
-            try! session.setActive(true)
-        }
+        guard UIPiPView.isUIPiPViewSupported(),
+            #available(iOS 15.0, *) else { return }
+
+        let session = AVAudioSession.sharedInstance()
+        try! session.setCategory(.playback, mode: .moviePlayback)
+        try! session.setActive(true)
     }
 
     /// Starts PinP.
@@ -86,39 +87,37 @@ open class UIPiPView: UIView,
     private func startPictureInPictureSub(
         refreshInterval: TimeInterval?
     ) {
-        if UIPiPView.isUIPiPViewSupported(), #available(iOS 15.0, *) {
-            render() /// For initial display
+        guard UIPiPView.isUIPiPViewSupported(),
+            #available(iOS 15.0, *) else { return }
 
-            guard let pipController = pipController else { return }
-            if (pipController.isPictureInPicturePossible) {
+        render() /// For initial display
+        guard let pipController = pipController else { return }
+        if (pipController.isPictureInPicturePossible) {
 
-                /// Start asynchronously after processing is complete
-                /// (will not work if run here synchronously)
-                DispatchQueue.main.async { [weak self] in
-                    pipController.startPictureInPicture()
-                    if let ti = refreshInterval {
-                        self?.setRenderInterval(ti)
-                    }
+            /// Start asynchronously after processing is complete
+            /// (will not work if run here synchronously)
+            DispatchQueue.main.async { [weak self] in
+                pipController.startPictureInPicture()
+                if let ti = refreshInterval {
+                    self?.setRenderInterval(ti)
                 }
+            }
 
-            } else {
-                /// It will take some time for PiP to become available.
-                pipPossibleObservation = pipController.observe(
-                    \AVPictureInPictureController.isPictureInPicturePossible,
-                    options: [.initial, .new]) { [weak self] _, change in
-                    guard let self = self else { return }
+        } else {
+            /// It will take some time for PiP to become available.
+            pipPossibleObservation = pipController.observe(
+                \AVPictureInPictureController.isPictureInPicturePossible,
+                options: [.initial, .new]) { [weak self] _, change in
+                guard let self = self else { return }
 
-                    if (change.newValue ?? false) {
-                        pipController.startPictureInPicture()
-                        self.pipPossibleObservation = nil
-                        if let ti = refreshInterval {
-                            self.setRenderInterval(ti)
-                        }
+                if (change.newValue ?? false) {
+                    pipController.startPictureInPicture()
+                    self.pipPossibleObservation = nil
+                    if let ti = refreshInterval {
+                        self.setRenderInterval(ti)
                     }
                 }
             }
-        } else {
-            print("[UIPiPView] UIPiPView cannot be used on this device or OS.")
         }
     }
 
@@ -183,6 +182,9 @@ open class UIPiPView: UIView,
     open func setRenderInterval(
         _ interval: TimeInterval
     ) {
+        guard UIPiPView.isUIPiPViewSupported(),
+            #available(iOS 15.0, *) else { return }
+
         refreshIntervalTimer = Timer(
             timeInterval: interval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
