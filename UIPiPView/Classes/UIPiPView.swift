@@ -230,9 +230,15 @@ open class UIPiPView: UIView,
     open func pictureInPictureControllerTimeRangeForPlayback(
         _ pictureInPictureController: AVPictureInPictureController
     ) -> CMTimeRange {
-        return CMTimeRange(
-            start: .negativeInfinity,
-            duration: .positiveInfinity
+
+        /// The following code will suppress AVKit (AVTimer work queue).
+        /// see https://github.com/uakihir0/UIPiPView/issues/17
+        return .init(
+            start: .zero,
+            duration: .init(
+                value: 3600 * 24,
+                timescale: 1
+            )
         )
     }
 
